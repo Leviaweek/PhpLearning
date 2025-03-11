@@ -6,7 +6,7 @@ require_once '../core/error.php';
 
 // TODO 2: ROUTING
 if (!empty($_SESSION['auth'])) {
-    error('admin.php');
+    header('Location: /admin.php');
 }
 
 // TODO 3: CODE by REQUEST METHODS (ACTIONS) GET, POST, etc. (handle data from request): 1) validate 2) working with data source 3) transforming data
@@ -14,7 +14,9 @@ if (!empty($_SESSION['auth'])) {
 require_once "../core/Database.php";
 
 // 2. handle form data
-if (!empty($_POST['email']) && !empty($_POST['password'])) {
+if (!empty($_POST) &&
+    !empty($_POST['form_token']) &&
+    $_POST['form_token'] === $_SESSION['form_token']) {
     
     $email = trim($_POST['email']);
     $password_trim = trim($_POST['password']);
@@ -22,6 +24,8 @@ if (!empty($_POST['email']) && !empty($_POST['password'])) {
     if (empty($email) || empty($password_trim)) {
         error('register.php', 'Заполните форму регистрации!');
     }
+
+    unset($_SESSION['form_token']);
 
     $password_hash = password_hash($password_trim, PASSWORD_DEFAULT);
 
@@ -51,8 +55,12 @@ if (!empty($_POST['email']) && !empty($_POST['password'])) {
         exit;
     }
 
-} else if (!empty($_POST)) {
+} else if (!empty($_POST['form_token'])) {
     error('register.php', 'Заполните форму регистрации!');
+}
+
+if (empty($_SESSION['form_token'])) {
+    $_SESSION['form_token'] = bin2hex(random_bytes(32));
 }
 
 // TODO 4: RENDER: 1) view (html) 2) data (from php)
@@ -79,6 +87,7 @@ if (!empty($_POST['email']) && !empty($_POST['password'])) {
         </div>
         <div class="card-body">
             <form method="post" action="register.php">
+                <input type="hidden" name="form_token" value="<?php echo $_SESSION['form_token']; ?>"/>
                 <div class="form-group">
                     <label>Email</label>
                     <input class="form-control" type="email" name="email" required/>
@@ -95,12 +104,12 @@ if (!empty($_POST['email']) && !empty($_POST['password'])) {
 
             <!-- TODO: render php data   -->
             <?php
-                if (isset($_SESSION['infoMessage'])) {
+                if (!empty($_SESSION['infoMessage'])) {
                     echo <<< HTML
                     <hr/>
                     <span style='color:red'>{$_SESSION['infoMessage']}</span>
                     HTML;
-                    unset($_SESSION['infoMessage']);
+                    $_SESSION['infoMessage'] = '';
                 }
             ?>
 
