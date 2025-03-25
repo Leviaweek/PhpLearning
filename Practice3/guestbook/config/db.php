@@ -1,9 +1,9 @@
 <?php
 return [
-    'path' => __DIR__ . '/../data/database.sqlite',
-    'pragmas' => [
-        'journal_mode' => 'WAL',
-        'foreign_keys' => true,
-        'encoding' => 'UTF_8'
-    ]
+    'host' => getenv('DB_HOST'),
+    'username' => getenv('DB_USER'),
+    'password' => getenv('DB_PASSWORD'),
+    'database' => getenv('DB_NAME'),
+    'port' => 3306,
+    'charset' => 'utf8mb4'
 ];

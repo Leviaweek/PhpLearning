@@ -2,15 +2,23 @@
 
 class Database {
     private static ?Database $instance = null;
-    private ?SQLite3 $db = null;
+    private ?mysqli $db = null;
 
     private function __construct() {
-        $config = require '../config/db.php';
-        $this->db = new SQLite3($config['path']);
-        foreach ($config['pragmas'] as $pragma => $value) {
-            $this->db->exec("PRAGMA $pragma = $value");
+        $config = require __DIR__ . '/../config/db.php';
+        $this->db = new mysqli(
+            hostname: $config['host'],
+            username: $config['username'],
+            password: $config['password'],
+            database: $config['database'],
+            port: $config['port']
+        );
+        
+        if ($this->db->connect_error) {
+            throw new Exception("Database connection error");
         }
-        $this->db->enableExceptions(true);
+
+        $this->db->set_charset($config['charset']);
     }
 
     public static function getInstance(): Database {
@@ -20,7 +28,7 @@ class Database {
         return self::$instance;
     }
 
-    public function getConnection(): SQLite3 {
+    public function getConnection(): mysqli {
         if ($this->db === null) {
             throw new Exception("Database connection error");
         }
@@ -32,9 +40,7 @@ class Database {
             return;
         }
         $this->db->close();
-        $this->instance = null;
+        self::$instance = null;
         $this->db = null;
     }
 }
-
-$db = Database::getInstance();
