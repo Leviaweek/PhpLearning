@@ -1,5 +1,7 @@
 <?php 
-
+namespace Guestbook\Core;
+use mysqli;
+use Exception;
 class Database {
     private static ?Database $instance = null;
     private ?mysqli $db = null;

@@ -19,11 +19,11 @@
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <?php if (!empty($_SESSION['auth'])) { ?>
                     <li class="nav-item">
-                        <a href="admin.php" class="nav-link active" aria-current="page">Admin</a>
+                        <a href="admin" class="nav-link active" aria-current="page">Admin</a>
                     </li>
                 <?php } else { ?>
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="guestbook.php">GuestBook</a>
+                        <a class="nav-link active" aria-current="page" href="/">GuestBook</a>
                     </li>
 
                 <?php } ?>
@@ -32,14 +32,14 @@
             <ul class="navbar-nav navbar-right">
                 <?php if (!empty($_SESSION['auth'])) { ?>
                     <li class="nav-item">
-                        <a href="logout.php" class="nav-link active" aria-current="page">Logout</a>
+                        <a href="logout" class="nav-link active" aria-current="page">Logout</a>
                     </li>
                 <?php } else { ?>
                     <li class="nav-item">
-                        <a href="register.php" class="nav-link active" aria-current="page" href="#">Register</a>
+                        <a href="register" class="nav-link active" aria-current="page" href="#">Register</a>
                     </li>
                     <li class="nav-item">
-                        <a href="login.php" class="nav-link active" aria-current="page" href="#">Login</a>
+                        <a href="login" class="nav-link active" aria-current="page" href="#">Login</a>
                     </li>
                 <?php } ?>
             </ul>

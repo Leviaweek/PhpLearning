@@ -1,41 +1,37 @@
 <?php
-// TODO 1: PREPARING ENVIRONMENT: 1) session 2) functions
-ob_start();
-session_start();
 
-// TODO 2: ROUTING
+require_once '../controllers/GuestbookController.php';
+require_once '../controllers/RegisterController.php';
+require_once '../controllers/AdminController.php';
+require_once '../controllers/LoginController.php';
+require_once '../controllers/LogoutController.php';
 
-// TODO 3: CODE by REQUEST METHODS (ACTIONS) GET, POST, etc. (handle data from request): 1) validate 2) working with data source 3) transforming data
+use guestbook\public\controllers\AdminController;
+use guestbook\public\controllers\GuestbookController;
+use guestbook\public\controllers\RegisterController;
+use guestbook\public\controllers\LoginController;
+use guestbook\public\controllers\LogoutController;
 
-// TODO 4: RENDER: 1) view (html) 2) data (from php)
+switch ($_SERVER['REQUEST_URI']) {
+    case '/':
+        $controller = new GuestbookController();
+        break;
+    case '/register':
+        $controller = new RegisterController();
+        break;
+    case '/admin':
+        $controller = new AdminController();
+        break;
+    case '/login':
+        $controller = new LoginController();
+        break;
+    case '/logout':
+        $controller = new LogoutController();
+        break;
+    default:
+        http_response_code(404);
+        die('404 Not Found');
+}
 
-?>
+$controller->execute();
 
-<!DOCTYPE html>
-<html>
-
-<?php require_once '../core/sectionHead.php' ?>
-
-<body>
-
-<div class="container">
-
-    <!-- navbar menu -->
-    <?php require_once '../core/sectionNavbar.php' ?>
-    <br>
-
-    <!-- guestbook section -->
-    <div class="card card-primary">
-        <div class="card-header bg-primary text-light">
-            Home page
-        </div>
-        <div class="card-body">
-
-            <!-- TODO: render php data   -->
-
-        </div>
-    </div>
-</div>
-
-</body>
-</html>
