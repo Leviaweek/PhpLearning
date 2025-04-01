@@ -1,5 +1,5 @@
 <?php
-namespace guestbook\public\controllers;
+namespace guestbook\controllers;
 use Guestbook\Core\Database;
 
 class RegisterController

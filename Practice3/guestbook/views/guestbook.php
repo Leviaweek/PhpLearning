@@ -63,7 +63,7 @@ function renderGuestBook(): void
                 <div class="col-sm-6">
 
                 <!-- TODO: create guestBook html form   -->
-                <form method="POST" action="/guestbook">
+                <form method="POST" action="/">
                     <input type="hidden" name="form_token" value="<?php echo $_SESSION['form_token']; ?>">
                     <div class="mb-3">
                         <label for="name" class="form-label">Имя</label>

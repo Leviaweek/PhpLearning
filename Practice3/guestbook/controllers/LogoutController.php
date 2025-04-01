@@ -1,5 +1,5 @@
 <?php
-namespace guestbook\public\controllers;
+namespace guestbook\controllers;
 
 class LogoutController
 {

@@ -1,5 +1,5 @@
 <?php
-namespace guestbook\public\controllers;
+namespace guestbook\controllers;
 use Guestbook\Core\Database;
 
 class GuestbookController
@@ -48,7 +48,7 @@ class GuestbookController
 
         $this->insertValue($name, $email, $comment);
 
-        header("Location: guestbook");
+        header("Location: /");
     }
 
     /**
