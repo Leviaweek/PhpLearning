@@ -11,7 +11,6 @@ class LoginController
 
         require_once '../core/error.php';
 
-        // TODO 2: ROUTING
         $this->handleRedirectIfAuthenticated();
 
         require_once '../core/Database.php';
